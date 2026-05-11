@@ -1,0 +1,62 @@
+[
+  {
+    "id": "seed_1",
+    "source": "seed",
+    "category": "Space",
+    "text": "A day on Venus is longer than its year — it takes 243 Earth days to rotate once but only 225 days to orbit the Sun."
+  },
+  {
+    "id": "seed_2",
+    "source": "seed",
+    "category": "Science",
+    "text": "Bananas are slightly radioactive because they contain potassium-40, a naturally occurring radioactive isotope."
+  },
+  {
+    "id": "seed_3",
+    "source": "seed",
+    "category": "Psychology",
+    "text": "Your brain uses about 20% of your body's total energy, despite making up only 2% of your weight."
+  },
+  {
+    "id": "seed_4",
+    "source": "seed",
+    "category": "History",
+    "text": "Oxford University is older than the Aztec Empire — Oxford was teaching by 1096, while the Aztec capital was founded in 1325."
+  },
+  {
+    "id": "seed_5",
+    "source": "seed",
+    "category": "Tech",
+    "text": "The first computer mouse, built in 1964 by Doug Engelbart, was made of wood."
+  },
+  {
+    "id": "seed_6",
+    "source": "seed",
+    "category": "Nature",
+    "text": "Octopuses have three hearts: two pump blood through the gills, and one circulates it to the rest of the body."
+  },
+  {
+    "id": "seed_7",
+    "source": "seed",
+    "category": "Money",
+    "text": "The world's first paper money was used in China during the Tang Dynasty over 1,400 years ago."
+  },
+  {
+    "id": "seed_8",
+    "source": "seed",
+    "category": "AI",
+    "text": "The term 'artificial intelligence' was coined in 1956 at the Dartmouth Conference by John McCarthy."
+  },
+  {
+    "id": "seed_9",
+    "source": "seed",
+    "category": "Geography",
+    "text": "Russia spans 11 time zones — more than any other country on Earth."
+  },
+  {
+    "id": "seed_10",
+    "source": "seed",
+    "category": "Health",
+    "text": "Your stomach gets a new lining every 3-4 days because stomach acid would otherwise digest it."
+  }
+]
