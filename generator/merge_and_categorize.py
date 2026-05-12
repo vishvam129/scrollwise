@@ -15,6 +15,28 @@ RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "facts.json"
 
 CATEGORIES: dict[str, list[str]] = {
+    "Mental Health": [
+        "depression",
+        "anxiety",
+        "panic attack",
+        "adhd",
+        "autism",
+        "bipolar",
+        "ocd",
+        "ptsd",
+        "schizophrenia",
+        "suicide",
+        "therapy",
+        "psychiatry",
+        "psychiatric",
+        "mental illness",
+        "mental health",
+        "eating disorder",
+        "anorexia",
+        "bulimia",
+        "self-harm",
+        "burnout",
+    ],
     "Science": [
         "science",
         "physics",

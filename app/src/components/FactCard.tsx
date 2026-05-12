@@ -19,6 +19,8 @@ const CATEGORY_COLORS: Record<string, string> = {
   Geography: "from-cyan-500 to-blue-700",
   Language: "from-violet-500 to-indigo-700",
   "Human Body": "from-rose-600 to-purple-800",
+  "Mental Health": "from-teal-500 to-cyan-800",
+  "This Day in History": "from-stone-600 to-amber-900",
   Misc: "from-slate-600 to-slate-800",
 };
 

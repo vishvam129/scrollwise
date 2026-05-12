@@ -1,14 +1,19 @@
 # Generator
 
-One-time scripts that pull ~10 years of public facts from free sources (no API keys), then merge, dedupe, and categorize them into `data/facts.json` for the app.
+Pulls millions of facts from free, licensed sources, then merges, dedupes, and categorizes them into `data/facts.json` for the app.
 
-## Sources
-- **Wikipedia article intros** (curated topics across 12 categories, deep on Human Body) — highest-quality, already in title+detail shape
-- **Reddit r/todayilearned** (via pullpush.io mirror) — ~10 years of top posts
-- **Wikipedia "Did You Know?"** archives — monthly DYK pages 2015–present
-- **uselessfacts.jsph.pl** — random English facts
-- **numbersapi.com** — number, math, date, year facts
-- **opentdb.com** — trivia Q&A converted to fact statements
+## Sources (all free, no API key required)
+
+| Script | Source | License | Est. facts | Has detail? |
+|---|---|---|---|---|
+| `scrape_wikipedia_topics.py` | Curated Wikipedia article intros (deep Human Body) | CC BY-SA | ~270 | ✅ |
+| `scrape_wikipedia_dyk.py` | Wikipedia "Did You Know" monthly archives 2015–now | CC BY-SA | 5–10k | needs Gemini |
+| `scrape_wikipedia_onthisday.py` | Wikimedia REST "On this day" — all 366 days | CC BY-SA | ~5k | ✅ |
+| `scrape_reddit_til.py` | r/todayilearned top posts (via pullpush.io) | user content | 10–20k | needs Gemini |
+| `scrape_nhs.py` | NHS conditions A-Z + sexual health + pregnancy | Open Gov Licence v3 | ~1k | ✅ |
+| `scrape_medlineplus.py` | NIH MedlinePlus health topics XML dump | US public domain | ~1k+ | ✅ |
+| `scrape_nasa_apod.py` | NASA Astronomy Picture of the Day 1995→now | US public domain | ~10k | ✅ |
+| `scrape_jeopardy.py` | jwolle1 Jeopardy clue dataset (~538k clues) | public dataset | ~300k usable | as clue→fact |
 
 ## Setup
 
@@ -19,33 +24,37 @@ source venv/bin/activate
 pip install -r generator/requirements.txt
 ```
 
-## Run (order matters only for merge step)
+## Run order
 
-The three scrapers are independent — you can run them in parallel terminals if you want.
+Scrapers are independent. Open 2-3 terminals to parallelize.
 
 ```bash
-# raw scrape (each writes to data/raw/) — run in any order, can be parallel
-python generator/scrape_wikipedia_topics.py  # ~3-5 min (best source, already has detail)
-python generator/scrape_reddit_til.py        # ~1-2 hours (rate-limited)
-python generator/scrape_wikipedia_dyk.py     # ~10-15 minutes
-python generator/scrape_apis.py              # ~15-25 minutes
+# fast (minutes), no enrichment needed
+python generator/scrape_wikipedia_topics.py
+python generator/scrape_wikipedia_onthisday.py
+python generator/scrape_medlineplus.py
+python generator/scrape_jeopardy.py
 
-# merge + dedupe + categorize -> data/facts.json
+# slower (hours), no enrichment needed
+python generator/scrape_nhs.py            # ~30-60 min
+python generator/scrape_nasa_apod.py      # ~1-2 hr
+
+# slowest (hours), need Gemini detail later
+python generator/scrape_wikipedia_dyk.py  # ~15 min
+python generator/scrape_reddit_til.py     # ~1-2 hr
+
+# combine + dedupe + categorize
 python generator/merge_and_categorize.py
 
-# (optional) enrich each fact with a 2-3 sentence Gemini-generated explanation
+# (optional) fill missing detail paragraphs via Gemini for facts lacking them
 python generator/enrich_with_gemini.py
 ```
 
 ## Output
 
-- `data/raw/reddit_til.json`
-- `data/raw/wikipedia_dyk.json`
-- `data/raw/misc_apis.json`
-- `data/facts.json`  ← what the app reads
+- `data/raw/*.json` — one file per scraper
+- `data/facts.json` — combined, deduped, categorized output the app reads
 
-Expected total: **20,000–50,000 unique facts** across ~15 categories.
+## Categories
 
-## Re-running
-
-Scripts overwrite their output files on each run. Safe to re-run any time.
+The merge step routes facts to one of these app categories by keyword (or honors `category` set by the scraper itself): Mental Health, Human Body, This Day in History, Science, Space, History, Tech, AI, Psychology, Money, Health, Nature, Pop Culture, Sports, Food, Geography, Language, Misc.
