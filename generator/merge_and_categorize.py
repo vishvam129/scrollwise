@@ -232,7 +232,8 @@ def process_file(path: Path, seen: set[str], out: list[dict]) -> int:
             {
                 "id": it.get("id"),
                 "source": it.get("source"),
-                "text": text,
+                "title": text,
+                "detail": "",
                 "category": categorize(text),
                 "url": it.get("url"),
             }

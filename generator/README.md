@@ -30,6 +30,9 @@ python generator/scrape_apis.py              # ~10-15 minutes
 
 # merge + dedupe + categorize -> data/facts.json
 python generator/merge_and_categorize.py
+
+# (optional) enrich each fact with a 2-3 sentence Gemini-generated explanation
+python generator/enrich_with_gemini.py
 ```
 
 ## Output
