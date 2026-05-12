@@ -68,5 +68,180 @@
     "category": "Health",
     "title": "Your stomach grows a new lining every few days.",
     "detail": "Stomach acid is so corrosive (pH ~1.5, similar to battery acid) that it would digest the stomach itself if not for a thick mucus layer. The cells of that lining are replaced every 3 to 4 days to stay ahead of the damage."
+  },
+  {
+    "id": "hb_1",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Puberty doesn't start when you 'look' different — it begins inside the brain.",
+    "detail": "The hypothalamus starts pulsing a hormone called GnRH, which signals the pituitary gland to release LH and FSH. Those hormones then tell the testes or ovaries to start producing testosterone or estrogen. Visible changes like body hair, voice drop, or breast growth come months after this internal switch flips."
+  },
+  {
+    "id": "hb_2",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "The menstrual cycle is roughly 28 days, but anywhere from 21 to 35 is normal.",
+    "detail": "It has four phases: menstrual (bleeding), follicular (an egg matures), ovulation (egg is released around day 14), and luteal (body prepares for possible pregnancy). Stress, illness, weight changes, and travel can all shift the timing — perfectly regular cycles are the exception, not the rule."
+  },
+  {
+    "id": "hb_3",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "An egg is only fertilizable for about 12-24 hours after ovulation.",
+    "detail": "Sperm, on the other hand, can survive inside the female reproductive tract for up to 5 days. That's why the 'fertile window' is about 6 days long — five days before ovulation plus the day of ovulation itself."
+  },
+  {
+    "id": "hb_4",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "The clitoris is much larger than what's visible.",
+    "detail": "Only the small glans is external — most of the organ extends internally, with two 'legs' (crura) up to 9 cm long that wrap around the vaginal canal. It contains around 10,000 nerve endings, more than any other structure in the human body. It was first fully mapped by anatomist Helen O'Connell in 1998."
+  },
+  {
+    "id": "hb_5",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Testicles hang outside the body for a reason: temperature.",
+    "detail": "Sperm production requires the testes to stay 2-3 °C cooler than core body temperature. The scrotum literally adjusts — pulling closer when cold and dropping farther when warm — to keep them in the right thermal range. Chronic overheating (tight underwear, laptops on the lap) can lower sperm count."
+  },
+  {
+    "id": "hb_6",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "A single ejaculation contains 40-300 million sperm.",
+    "detail": "But fewer than 100 typically make it near the egg. The journey through the uterus and fallopian tubes is filtered by mucus, immune cells, and sheer distance — only the strongest swimmers survive. It takes just one to fertilize an egg."
+  },
+  {
+    "id": "hb_7",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Condoms are the only contraceptive that also protects against STIs.",
+    "detail": "Birth control pills, IUDs, implants, and injections are highly effective at preventing pregnancy (over 99% for IUDs and implants) but offer zero protection from infections like HIV, chlamydia, or gonorrhea. Pairing a hormonal method with a condom — sometimes called 'double Dutch' — covers both bases."
+  },
+  {
+    "id": "hb_8",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Most STIs have no visible symptoms — that's why they spread.",
+    "detail": "Up to 70% of chlamydia infections in women and 50% in men cause no noticeable signs. HIV can be silent for years. Regular testing — not 'I'd know if I had something' — is the only reliable way to catch infections early, when most are curable or fully manageable."
+  },
+  {
+    "id": "hb_9",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "HPV is so common that nearly everyone gets it at some point.",
+    "detail": "Most strains are harmless and clear on their own within two years. A few high-risk strains can cause cervical, throat, anal, and penile cancers — which is why the HPV vaccine (Gardasil 9) is recommended for both girls and boys, ideally before age 15."
+  },
+  {
+    "id": "hb_10",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Consent has to be ongoing, specific, and freely given.",
+    "detail": "Agreeing to one act doesn't mean agreeing to another, and consent can be withdrawn at any moment. It can't be valid if someone is asleep, drunk, drugged, underage, or feels pressured. The simplest model is 'enthusiastic, informed, and revocable' — silence or absence of a 'no' is not a yes."
+  },
+  {
+    "id": "hb_11",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "The hymen is not a 'seal' and doesn't reliably indicate virginity.",
+    "detail": "It's a thin, stretchy membrane with an opening for menstrual blood. It varies hugely between people — some are born with very little, others have more. It can stretch or tear from sports, tampons, or normal activity, and many people don't bleed the first time they have sex. 'Virginity testing' has been condemned as unscientific by the WHO."
+  },
+  {
+    "id": "hb_12",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Sperm count has dropped roughly 50% globally over the last 50 years.",
+    "detail": "A 2022 meta-analysis of 57 countries found average sperm concentration fell from ~104 to ~49 million per ml between 1973 and 2018. Likely drivers include endocrine-disrupting chemicals, obesity, smoking, and chronic stress. Fertility researchers consider it a quiet public-health crisis."
+  },
+  {
+    "id": "hb_13",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Pregnancy is counted from your last period, not from conception.",
+    "detail": "That's why doctors say 'you're 4 weeks pregnant' when fertilization actually happened only about 2 weeks ago. The convention makes due dates easier to calculate, since most people know when their last period started but not the exact moment of conception. A full-term pregnancy is 40 weeks by this count."
+  },
+  {
+    "id": "hb_14",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Emergency contraception works mainly by delaying ovulation.",
+    "detail": "Pills like Plan B (levonorgestrel) are most effective within 72 hours of unprotected sex; ulipristal acetate (ella) works up to 120 hours. They are not abortion pills — they prevent an egg from being released. A copper IUD inserted within 5 days is the most effective emergency option, over 99%."
+  },
+  {
+    "id": "hb_15",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Menopause is officially diagnosed after 12 months without a period.",
+    "detail": "It typically happens between 45 and 55, but perimenopause — the hormonal lead-up — can start a decade earlier and cause hot flashes, mood swings, sleep issues, and irregular cycles. Once menopause is complete, the ovaries no longer release eggs, but sexual function, desire, and pleasure don't have to disappear."
+  },
+  {
+    "id": "hb_16",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "The G-spot is more of a region than a specific organ.",
+    "detail": "It's an area on the front wall of the vagina where the internal parts of the clitoris meet the urethral sponge. Some people find stimulation there pleasurable, others don't notice much — both are normal. Modern anatomical research suggests most 'vaginal' orgasms involve the internal clitoris."
+  },
+  {
+    "id": "hb_17",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Erections happen in the brain before they happen in the body.",
+    "detail": "Arousal signals from the brain trigger nerves that relax smooth muscle in the penis, letting blood flow into spongy tissue called the corpora cavernosa. Stress, anxiety, alcohol, certain medications, and cardiovascular issues are far more common causes of erectile difficulty than any 'masculinity' myth."
+  },
+  {
+    "id": "hb_18",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Masturbation has measurable health benefits and no proven harms.",
+    "detail": "Studies link it to reduced stress, better sleep, improved mood (via dopamine and oxytocin), and — in some research — lower risk of prostate cancer. The old myths about blindness, hair loss, or weakness have no scientific basis whatsoever."
+  },
+  {
+    "id": "hb_19",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Pulling out is much less effective than people think.",
+    "detail": "Even with 'perfect use', withdrawal has about a 4% annual failure rate; with typical use it's around 20% — meaning 1 in 5 couples relying on it gets pregnant within a year. Pre-ejaculate can also contain residual sperm, especially after a previous ejaculation."
+  },
+  {
+    "id": "hb_20",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "You can't 'catch up' on sex hormones with willpower — they're regulated by feedback loops.",
+    "detail": "Testosterone, estrogen, and progesterone are produced in response to signals from the pituitary and hypothalamus, which adjust based on what's already circulating. Sleep, exercise, body fat percentage, and chronic stress influence these loops far more than supplements or 'boosters' do."
+  },
+  {
+    "id": "hb_21",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Sexual orientation and gender identity are not the same thing.",
+    "detail": "Orientation describes who you're attracted to (straight, gay, bi, asexual, etc.). Gender identity describes who you are (man, woman, non-binary, etc.). They vary independently — a trans woman, for example, can be straight, lesbian, bi, or asexual."
+  },
+  {
+    "id": "hb_22",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "The 'refractory period' is when men can't get aroused again — and it varies enormously.",
+    "detail": "After orgasm, prolactin levels rise sharply and dopamine drops, temporarily blocking another erection. It can last minutes in young adults and hours-to-days later in life. Women generally have a much shorter or absent refractory period, which is why multiple orgasms are anatomically easier for them."
+  },
+  {
+    "id": "hb_23",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "STI testing is usually quick, often free, and frequently does not require a physical exam.",
+    "detail": "Many STIs are detected from a urine sample (chlamydia, gonorrhea) or a finger-prick blood test (HIV, syphilis). Most public health clinics, Planned Parenthood (US), NHS sexual health clinics (UK), and similar services worldwide offer testing confidentially and at low or no cost."
+  },
+  {
+    "id": "hb_24",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Painful sex is common but not normal — and it's almost always treatable.",
+    "detail": "Causes range from low lubrication and pelvic floor tension to infections, endometriosis, vaginismus, or hormonal shifts. It's not 'just how it is for me'; gynecologists, urologists, and pelvic-floor physiotherapists can usually identify and treat the underlying cause."
+  },
+  {
+    "id": "hb_25",
+    "source": "seed",
+    "category": "Human Body",
+    "title": "Porn doesn't reliably match how real sex looks, feels, or sounds.",
+    "detail": "It's produced with lighting, edits, retakes, and performers chosen for visual effect — not for accuracy. Reliance on it as a sex-ed source correlates with unrealistic expectations about bodies, stamina, and partner reactions. Real intimacy involves awkward moments, communication, and adjustment."
   }
 ]

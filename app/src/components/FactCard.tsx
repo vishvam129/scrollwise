@@ -18,6 +18,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Food: "from-yellow-500 to-orange-700",
   Geography: "from-cyan-500 to-blue-700",
   Language: "from-violet-500 to-indigo-700",
+  "Human Body": "from-rose-600 to-purple-800",
   Misc: "from-slate-600 to-slate-800",
 };
 
