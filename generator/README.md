@@ -3,6 +3,7 @@
 One-time scripts that pull ~10 years of public facts from free sources (no API keys), then merge, dedupe, and categorize them into `data/facts.json` for the app.
 
 ## Sources
+- **Wikipedia article intros** (curated topics across 12 categories, deep on Human Body) — highest-quality, already in title+detail shape
 - **Reddit r/todayilearned** (via pullpush.io mirror) — ~10 years of top posts
 - **Wikipedia "Did You Know?"** archives — monthly DYK pages 2015–present
 - **uselessfacts.jsph.pl** — random English facts
@@ -23,10 +24,11 @@ pip install -r generator/requirements.txt
 The three scrapers are independent — you can run them in parallel terminals if you want.
 
 ```bash
-# raw scrape (each writes to data/raw/)
+# raw scrape (each writes to data/raw/) — run in any order, can be parallel
+python generator/scrape_wikipedia_topics.py  # ~3-5 min (best source, already has detail)
 python generator/scrape_reddit_til.py        # ~1-2 hours (rate-limited)
 python generator/scrape_wikipedia_dyk.py     # ~10-15 minutes
-python generator/scrape_apis.py              # ~10-15 minutes
+python generator/scrape_apis.py              # ~15-25 minutes
 
 # merge + dedupe + categorize -> data/facts.json
 python generator/merge_and_categorize.py

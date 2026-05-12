@@ -276,10 +276,19 @@ def process_file(path: Path, seen: set[str], out: list[dict]) -> int:
     items = json.loads(path.read_text())
     kept = 0
     for it in items:
-        text = clean(it.get("text", ""))
-        if not text or len(text) < 25 or len(text) > 500:
+        # Wikipedia topics already split title/detail/category; everything
+        # else gives us a single `text` field.
+        if it.get("title"):
+            title = clean(it["title"])
+            detail = clean(it.get("detail", ""))
+            category = it.get("category") or categorize(title)
+        else:
+            title = clean(it.get("text", ""))
+            detail = ""
+            category = categorize(title)
+        if not title or len(title) < 25 or len(title) > 500:
             continue
-        key = normalize_key(text)
+        key = normalize_key(title)
         if not key or key in seen:
             continue
         seen.add(key)
@@ -287,9 +296,9 @@ def process_file(path: Path, seen: set[str], out: list[dict]) -> int:
             {
                 "id": it.get("id"),
                 "source": it.get("source"),
-                "title": text,
-                "detail": "",
-                "category": categorize(text),
+                "title": title,
+                "detail": detail,
+                "category": category,
                 "url": it.get("url"),
             }
         )
