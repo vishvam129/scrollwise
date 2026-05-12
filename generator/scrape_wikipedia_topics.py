@@ -24,8 +24,9 @@ API = "https://en.wikipedia.org/w/api.php"
 HEADERS = {"User-Agent": "scrollwise-scraper/0.1 (personal project)"}
 OUT = Path(__file__).resolve().parent.parent / "data" / "raw" / "wikipedia_topics.json"
 OUT.parent.mkdir(parents=True, exist_ok=True)
-BATCH = 20  # titles per API call
-SLEEP = 0.5
+BATCH = 10  # titles per API call (was 20 -> hit 429s)
+SLEEP = 1.5
+MAX_RETRIES = 4
 
 
 # Curated topic lists per category. Each entry is a Wikipedia article title.
@@ -424,7 +425,7 @@ TOPICS: dict[str, list[str]] = {
 
 
 def fetch_intros(titles: list[str]) -> dict[str, str]:
-    """Return {title: intro_text} for a batch of up to ~20 titles."""
+    """Return {title: intro_text} for a batch of titles, with retry/backoff on 429."""
     params = {
         "action": "query",
         "format": "json",
@@ -434,9 +435,18 @@ def fetch_intros(titles: list[str]) -> dict[str, str]:
         "redirects": 1,
         "titles": "|".join(titles),
     }
-    r = requests.get(API, params=params, headers=HEADERS, timeout=30)
-    r.raise_for_status()
-    data = r.json()
+    delay = 2.0
+    for attempt in range(MAX_RETRIES):
+        r = requests.get(API, params=params, headers=HEADERS, timeout=30)
+        if r.status_code == 429:
+            time.sleep(delay)
+            delay *= 2
+            continue
+        r.raise_for_status()
+        data = r.json()
+        break
+    else:
+        raise RuntimeError("Wikipedia API kept returning 429 after retries")
     out: dict[str, str] = {}
     for page in data.get("query", {}).get("pages", {}).values():
         if "missing" in page:
@@ -469,16 +479,35 @@ def split_title_detail(text: str) -> tuple[str, str]:
 
 
 def main() -> None:
+    # Resume: load anything we already have so reruns skip completed titles.
     facts: list[dict] = []
-    seen: set[str] = set()
+    if OUT.exists():
+        try:
+            facts = json.loads(OUT.read_text())
+            print(f"Resuming with {len(facts)} previously saved facts")
+        except Exception:
+            facts = []
+    seen: set[str] = {f["title"].lower() for f in facts if f.get("title")}
+    have_urls: set[str] = {f.get("url") for f in facts if f.get("url")}
+
     total = sum(len(v) for v in TOPICS.values())
     pbar = tqdm(total=total, desc="wikipedia topics")
 
     for category, titles in TOPICS.items():
         for i in range(0, len(titles), BATCH):
             chunk = titles[i : i + BATCH]
+            # skip titles whose Wikipedia URL is already in our saved facts
+            pending = [
+                t
+                for t in chunk
+                if f"https://en.wikipedia.org/wiki/{t.replace(' ', '_')}"
+                not in have_urls
+            ]
+            if not pending:
+                pbar.update(len(chunk))
+                continue
             try:
-                intros = fetch_intros(chunk)
+                intros = fetch_intros(pending)
             except Exception as e:
                 print(f"\n  ! batch failed: {e}")
                 intros = {}

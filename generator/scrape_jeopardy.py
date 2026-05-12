@@ -18,30 +18,41 @@ import csv
 import io
 import json
 import re
+import zipfile
 from pathlib import Path
 
 import requests
 from tqdm import tqdm
 
-CONTENTS_API = "https://api.github.com/repos/jwolle1/jeopardy_clue_dataset/contents/"
+RELEASES_API = (
+    "https://api.github.com/repos/jwolle1/jeopardy_clue_dataset/releases/latest"
+)
 HEADERS = {"User-Agent": "scrollwise-scraper/0.1 (personal project)"}
 OUT = Path(__file__).resolve().parent.parent / "data" / "raw" / "jeopardy.json"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 
-def find_largest_tsv() -> tuple[str, int]:
-    r = requests.get(CONTENTS_API, headers=HEADERS, timeout=30)
+def find_latest_zip() -> tuple[str, int]:
+    r = requests.get(RELEASES_API, headers=HEADERS, timeout=30)
     r.raise_for_status()
-    files = [
-        f
-        for f in r.json()
-        if f.get("name", "").endswith(".tsv") and f.get("type") == "file"
-    ]
-    if not files:
-        raise RuntimeError("No TSV files found in jeopardy_clue_dataset root.")
-    files.sort(key=lambda f: f.get("size", 0), reverse=True)
-    top = files[0]
-    return top["download_url"], top.get("size", 0)
+    assets = r.json().get("assets", [])
+    zips = [a for a in assets if a.get("name", "").endswith(".zip")]
+    if not zips:
+        raise RuntimeError(
+            "No zip asset found in latest jeopardy_clue_dataset release."
+        )
+    zips.sort(key=lambda a: a.get("size", 0), reverse=True)
+    return zips[0]["browser_download_url"], zips[0].get("size", 0)
+
+
+def extract_tsv_from_zip(zip_bytes: bytes) -> str:
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
+        tsv_names = [n for n in zf.namelist() if n.endswith(".tsv")]
+        if not tsv_names:
+            raise RuntimeError("Zip contains no .tsv files.")
+        tsv_names.sort(key=lambda n: zf.getinfo(n).file_size, reverse=True)
+        with zf.open(tsv_names[0]) as f:
+            return f.read().decode("utf-8", errors="replace")
 
 
 def clean(text: str) -> str:
@@ -51,13 +62,12 @@ def clean(text: str) -> str:
 
 
 def main() -> None:
-    url, size = find_largest_tsv()
+    url, size = find_latest_zip()
     print(f"Downloading {url} ({size / 1024 / 1024:.1f} MB)")
-    r = requests.get(url, headers=HEADERS, timeout=300)
+    r = requests.get(url, headers=HEADERS, timeout=600)
     r.raise_for_status()
-    text = r.text
+    text = extract_tsv_from_zip(r.content)
 
-    # detect dialect
     sample = "\n".join(text.splitlines()[:5])
     delim = "\t" if "\t" in sample else ","
     reader = csv.DictReader(io.StringIO(text), delimiter=delim)

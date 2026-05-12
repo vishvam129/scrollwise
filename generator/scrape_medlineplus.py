@@ -32,14 +32,18 @@ def find_latest_english_dump() -> str:
     candidates: list[str] = []
     for a in soup.select("a[href]"):
         href = a["href"]
-        if "mplus_topics" in href and "_en_" in href and href.endswith(".xml"):
+        # Files look like: https://medlineplus.gov/xml/mplus_topics_YYYY-MM-DD.xml
+        if "mplus_topics_" in href and href.endswith(".xml") and "groups" not in href:
             if not href.startswith("http"):
                 href = "https://medlineplus.gov" + (
                     href if href.startswith("/") else "/" + href
                 )
             candidates.append(href)
     if not candidates:
-        raise RuntimeError("Could not find an English MedlinePlus topics XML dump.")
+        raise RuntimeError(
+            "Could not find a MedlinePlus topics XML dump on the index page."
+        )
+    # newest sorts to the end by ISO date in the filename
     return sorted(candidates)[-1]
 
 
