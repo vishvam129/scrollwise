@@ -33,7 +33,8 @@ export function FactCard({ fact, saved, onToggleSave }: Props) {
     CATEGORY_COLORS[fact.category] ?? CATEGORY_COLORS.Misc;
 
   const copy = async () => {
-    await navigator.clipboard.writeText(fact.text);
+    const body = fact.detail ? `${fact.title}\n\n${fact.detail}` : fact.title;
+    await navigator.clipboard.writeText(body);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
@@ -50,9 +51,14 @@ export function FactCard({ fact, saved, onToggleSave }: Props) {
           <span className="text-xs opacity-60">{fact.source}</span>
         </div>
 
-        <p className="text-2xl sm:text-3xl md:text-4xl font-medium leading-snug">
-          {fact.text}
-        </p>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight">
+          {fact.title}
+        </h2>
+        {fact.detail && (
+          <p className="mt-5 text-base sm:text-lg leading-relaxed text-white/85">
+            {fact.detail}
+          </p>
+        )}
 
         <div className="mt-10 flex items-center gap-3">
           <button

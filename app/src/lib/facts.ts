@@ -5,7 +5,8 @@ export type Fact = {
   id: string;
   source: string;
   category: string;
-  text: string;
+  title: string;
+  detail?: string;
   url?: string;
 };
 

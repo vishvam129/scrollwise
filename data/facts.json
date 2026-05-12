@@ -3,60 +3,70 @@
     "id": "seed_1",
     "source": "seed",
     "category": "Space",
-    "text": "A day on Venus is longer than its year — it takes 243 Earth days to rotate once but only 225 days to orbit the Sun."
+    "title": "A day on Venus is longer than its year.",
+    "detail": "Venus rotates so slowly that one full rotation takes about 243 Earth days, while it orbits the Sun in just 225. It also spins backwards compared to most planets — likely the result of a massive ancient collision."
   },
   {
     "id": "seed_2",
     "source": "seed",
     "category": "Science",
-    "text": "Bananas are slightly radioactive because they contain potassium-40, a naturally occurring radioactive isotope."
+    "title": "Bananas are slightly radioactive.",
+    "detail": "They contain potassium-40, a naturally radioactive isotope. The dose is so tiny it's harmless — you'd need to eat tens of millions of bananas in one sitting to be in danger. Scientists even use a half-joke unit called the 'Banana Equivalent Dose' to explain radiation."
   },
   {
     "id": "seed_3",
     "source": "seed",
     "category": "Psychology",
-    "text": "Your brain uses about 20% of your body's total energy, despite making up only 2% of your weight."
+    "title": "Your brain uses about 20% of your body's energy.",
+    "detail": "Despite making up only ~2% of your body weight, the brain burns roughly a fifth of your daily calories — about 300–400 kcal. Most of that fuels neurons firing constantly, even while you sleep."
   },
   {
     "id": "seed_4",
     "source": "seed",
     "category": "History",
-    "text": "Oxford University is older than the Aztec Empire — Oxford was teaching by 1096, while the Aztec capital was founded in 1325."
+    "title": "Oxford University is older than the Aztec Empire.",
+    "detail": "Teaching at Oxford began as early as 1096, while the Aztec capital Tenochtitlán wasn't founded until 1325 — over two centuries later. By the time the Aztecs were building pyramids, Oxford was already minting graduates."
   },
   {
     "id": "seed_5",
     "source": "seed",
     "category": "Tech",
-    "text": "The first computer mouse, built in 1964 by Doug Engelbart, was made of wood."
+    "title": "The first computer mouse was made of wood.",
+    "detail": "Built in 1964 by Douglas Engelbart at Stanford Research Institute, the prototype had a wooden shell, two perpendicular metal wheels, and one button. He called it 'X-Y position indicator for a display system' — the nickname 'mouse' stuck because of its tail-like cable."
   },
   {
     "id": "seed_6",
     "source": "seed",
     "category": "Nature",
-    "text": "Octopuses have three hearts: two pump blood through the gills, and one circulates it to the rest of the body."
+    "title": "Octopuses have three hearts.",
+    "detail": "Two branchial hearts pump blood through the gills, and a third systemic heart sends it to the rest of the body. Strangely, the systemic heart stops when they swim — which is why octopuses prefer to crawl, as swimming exhausts them."
   },
   {
     "id": "seed_7",
     "source": "seed",
     "category": "Money",
-    "text": "The world's first paper money was used in China during the Tang Dynasty over 1,400 years ago."
+    "title": "Paper money was invented over 1,400 years ago.",
+    "detail": "It first appeared in China during the Tang Dynasty (~7th century) as deposit receipts issued by merchants. By the Song Dynasty it had evolved into government-issued banknotes — predating European paper money by nearly 1,000 years."
   },
   {
     "id": "seed_8",
     "source": "seed",
     "category": "AI",
-    "text": "The term 'artificial intelligence' was coined in 1956 at the Dartmouth Conference by John McCarthy."
+    "title": "The term 'artificial intelligence' was coined in 1956.",
+    "detail": "Computer scientist John McCarthy proposed the phrase for the Dartmouth Summer Research Project, an eight-week workshop that brought together pioneers like Marvin Minsky and Claude Shannon. That summer is widely considered the birth of AI as a field."
   },
   {
     "id": "seed_9",
     "source": "seed",
     "category": "Geography",
-    "text": "Russia spans 11 time zones — more than any other country on Earth."
+    "title": "Russia spans 11 time zones.",
+    "detail": "More than any other country on Earth. When it's midnight in Kaliningrad on the western border, it's already 11 AM the next day in Kamchatka on the Pacific coast — an 11-hour gap inside a single nation."
   },
   {
     "id": "seed_10",
     "source": "seed",
     "category": "Health",
-    "text": "Your stomach gets a new lining every 3-4 days because stomach acid would otherwise digest it."
+    "title": "Your stomach grows a new lining every few days.",
+    "detail": "Stomach acid is so corrosive (pH ~1.5, similar to battery acid) that it would digest the stomach itself if not for a thick mucus layer. The cells of that lining are replaced every 3 to 4 days to stay ahead of the damage."
   }
 ]
