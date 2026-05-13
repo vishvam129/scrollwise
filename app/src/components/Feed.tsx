@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { FactCard } from "./FactCard";
+import { MenuIcon } from "./Icons";
 import type { Fact } from "@/lib/facts";
 
 const SAVED_KEY = "scrollwise:saved";
@@ -12,6 +13,7 @@ export function Feed() {
   const [category, setCategory] = useState<string>("All");
   const [saved, setSaved] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -42,44 +44,81 @@ export function Feed() {
   }, []);
 
   return (
-    <main className="h-screen w-screen overflow-y-scroll snap-y snap-mandatory bg-black">
-      <header className="fixed top-0 left-0 right-0 z-10 px-4 py-3 flex gap-2 overflow-x-auto bg-gradient-to-b from-black/60 to-transparent backdrop-blur">
-        {categories.map((c) => (
-          <button
-            key={c}
-            onClick={() => setCategory(c)}
-            className={`shrink-0 text-xs px-3 py-1.5 rounded-full transition ${
-              category === c
-                ? "bg-white text-black"
-                : "bg-white/15 text-white hover:bg-white/25"
-            }`}
-          >
-            {c}
-          </button>
+    <>
+      {/* floating menu — minimal, glassy */}
+      <button
+        onClick={() => setSheetOpen(true)}
+        aria-label="Open categories"
+        className="fixed top-[max(env(safe-area-inset-top),1rem)] right-4 z-30 flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white"
+      >
+        <MenuIcon className="w-4 h-4" />
+        <span className="text-[0.74rem] font-semibold tracking-wide">
+          {category === "All" ? "All" : category}
+        </span>
+      </button>
+
+      <main className="feed h-[100dvh] w-screen overflow-y-scroll snap-y snap-mandatory bg-black">
+        {loading && (
+          <div className="h-[100dvh] flex items-center justify-center">
+            <div className="flex items-center gap-2 text-white/70 text-sm font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+              loading feed
+            </div>
+          </div>
+        )}
+        {!loading && facts.length === 0 && (
+          <div className="h-[100dvh] flex items-center justify-center text-white/55 px-8 text-center">
+            No facts in this category yet.
+          </div>
+        )}
+        {facts.map((f) => (
+          <FactCard
+            key={f.id}
+            fact={f}
+            saved={saved.has(f.id)}
+            onToggleSave={toggleSave}
+          />
         ))}
-      </header>
+      </main>
 
-      {loading && (
-        <div className="h-screen flex items-center justify-center text-white/60">
-          Loading…
+      {sheetOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          onClick={() => setSheetOpen(false)}
+        >
+          <div
+            className="absolute left-0 right-0 bottom-0 bg-[#0c0c0d] border-t border-white/8 rounded-t-3xl px-5 pt-3 pb-[max(env(safe-area-inset-bottom),1.5rem)] max-h-[80vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto w-10 h-1 rounded-full bg-white/18 mb-5" />
+            <div className="text-white/45 text-[0.7rem] tracking-[0.22em] uppercase font-bold mb-3">
+              Categories
+            </div>
+            <div className="flex flex-col">
+              {categories.map((c) => {
+                const active = c === category;
+                return (
+                  <button
+                    key={c}
+                    onClick={() => {
+                      setCategory(c);
+                      setSheetOpen(false);
+                    }}
+                    className={`flex items-center justify-between py-3.5 border-b border-white/5 text-left ${
+                      active ? "text-[var(--accent)]" : "text-white"
+                    }`}
+                  >
+                    <span className="text-[1.02rem] font-semibold">{c}</span>
+                    {active && (
+                      <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       )}
-
-      {!loading && facts.length === 0 && (
-        <div className="h-screen flex items-center justify-center text-white/60 px-6 text-center">
-          No facts in this category yet. Try another, or run the scrapers in
-          <code className="ml-1 px-1.5 bg-white/10 rounded">generator/</code>.
-        </div>
-      )}
-
-      {facts.map((f) => (
-        <FactCard
-          key={f.id}
-          fact={f}
-          saved={saved.has(f.id)}
-          onToggleSave={toggleSave}
-        />
-      ))}
-    </main>
+    </>
   );
 }

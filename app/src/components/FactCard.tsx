@@ -2,26 +2,49 @@
 
 import { useState } from "react";
 import type { Fact } from "@/lib/facts";
+import { HeartIcon, ShareIcon, SourceIcon, CheckIcon } from "./Icons";
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Science: "from-emerald-500 to-teal-700",
-  Space: "from-indigo-600 to-purple-800",
-  History: "from-amber-600 to-orange-800",
-  Tech: "from-sky-500 to-blue-800",
-  AI: "from-fuchsia-500 to-pink-700",
-  Psychology: "from-rose-500 to-red-700",
-  Money: "from-lime-500 to-green-700",
-  Health: "from-red-500 to-rose-700",
-  Nature: "from-green-500 to-emerald-800",
-  "Pop Culture": "from-pink-500 to-purple-700",
-  Sports: "from-orange-500 to-red-700",
-  Food: "from-yellow-500 to-orange-700",
-  Geography: "from-cyan-500 to-blue-700",
-  Language: "from-violet-500 to-indigo-700",
-  "Human Body": "from-rose-600 to-purple-800",
-  "Mental Health": "from-teal-500 to-cyan-800",
-  "This Day in History": "from-stone-600 to-amber-900",
-  Misc: "from-slate-600 to-slate-800",
+const DOT_CLASS: Record<string, string> = {
+  Space: "dot-space",
+  Science: "dot-science",
+  History: "dot-history",
+  Tech: "dot-tech",
+  AI: "dot-ai",
+  Psychology: "dot-psychology",
+  Money: "dot-money",
+  Health: "dot-health",
+  Nature: "dot-nature",
+  "Pop Culture": "dot-popculture",
+  Sports: "dot-sports",
+  Food: "dot-food",
+  Geography: "dot-geography",
+  Language: "dot-language",
+  "Human Body": "dot-humanbody",
+  "Mental Health": "dot-mental",
+  "This Day in History": "dot-history2",
+  Misc: "dot-misc",
+};
+
+// soft accent glow color per category (very subtle — just atmosphere)
+const GLOW: Record<string, [string, string]> = {
+  Space: ["#312e81", "#0b1e6f"],
+  Science: ["#064e3b", "#022c25"],
+  History: ["#78350f", "#3a1c0a"],
+  Tech: ["#0c4a6e", "#062738"],
+  AI: ["#86198f", "#3b0a4a"],
+  Psychology: ["#9d174d", "#3a0a1f"],
+  Money: ["#3f6212", "#1a2906"],
+  Health: ["#7f1d1d", "#2d0808"],
+  Nature: ["#166534", "#052013"],
+  "Pop Culture": ["#9f1239", "#3a081a"],
+  Sports: ["#7c2d12", "#2d1408"],
+  Food: ["#713f12", "#2d1908"],
+  Geography: ["#155e75", "#051a22"],
+  Language: ["#5b21b6", "#1c0844"],
+  "Human Body": ["#9d174d", "#2c0817"],
+  "Mental Health": ["#115e59", "#052024"],
+  "This Day in History": ["#854d0e", "#221404"],
+  Misc: ["#1f2937", "#0a1018"],
 };
 
 type Props = {
@@ -32,66 +55,133 @@ type Props = {
 
 export function FactCard({ fact, saved, onToggleSave }: Props) {
   const [copied, setCopied] = useState(false);
-  const gradient =
-    CATEGORY_COLORS[fact.category] ?? CATEGORY_COLORS.Misc;
+  const [popping, setPopping] = useState(false);
+  const dot = DOT_CLASS[fact.category] ?? DOT_CLASS.Misc;
+  const [g1, g2] = GLOW[fact.category] ?? GLOW.Misc;
 
-  const copy = async () => {
-    const body = fact.detail ? `${fact.title}\n\n${fact.detail}` : fact.title;
-    await navigator.clipboard.writeText(body);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+  const handleSave = () => {
+    onToggleSave(fact.id);
+    setPopping(true);
+    setTimeout(() => setPopping(false), 500);
   };
+
+  const handleShare = async () => {
+    const body = fact.detail ? `${fact.title}\n\n${fact.detail}` : fact.title;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: fact.title, text: body });
+      } else {
+        await navigator.clipboard.writeText(body);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1400);
+      }
+    } catch {}
+  };
+
+  // category as a handle, lowercase no-space
+  const handle = "@" + fact.category.toLowerCase().replace(/\s+/g, "");
 
   return (
     <section
-      className={`snap-start h-screen w-full flex items-center justify-center bg-gradient-to-br ${gradient} px-6`}
+      className="relative snap-start h-[100dvh] w-full bg-black overflow-hidden glow-tl glow-br flex"
+      style={{ ["--glow" as string]: g1, ["--glow2" as string]: g2 }}
     >
-      <div className="max-w-2xl w-full text-white">
-        <div className="flex items-center justify-between mb-8">
-          <span className="text-xs uppercase tracking-widest bg-white/15 backdrop-blur rounded-full px-3 py-1">
-            {fact.category}
-          </span>
-          <span className="text-xs opacity-60">{fact.source}</span>
-        </div>
+      {/* caption block — bottom-left, TikTok style */}
+      <div className="absolute inset-x-0 bottom-0 z-10 pb-[max(env(safe-area-inset-bottom),1.5rem)]">
+        {/* gradient mask under text for legibility */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-[70%] -z-10 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none"
+        />
 
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight">
-          {fact.title}
-        </h2>
-        {fact.detail && (
-          <p className="mt-5 text-base sm:text-lg leading-relaxed text-white/85">
-            {fact.detail}
-          </p>
-        )}
+        <div className="px-5 sm:px-8 pr-[5.5rem] sm:pr-[6.5rem] caption-rise">
+          {/* handle */}
+          <div className="flex items-center gap-2 mb-3">
+            <span className={`w-2 h-2 rounded-full ${dot}`} />
+            <span className="font-mono text-[0.78rem] tracking-tight text-white/90 font-medium">
+              {handle}
+            </span>
+          </div>
 
-        <div className="mt-10 flex items-center gap-3">
-          <button
-            onClick={() => onToggleSave(fact.id)}
-            className="px-4 py-2 rounded-full bg-white/15 backdrop-blur hover:bg-white/25 transition text-sm"
+          {/* title */}
+          <h1
+            className="text-white font-bold text-shadow-deep text-[clamp(1.55rem,5.6vw,2.35rem)] leading-[1.12] tracking-tight"
+            style={{ fontWeight: 800 }}
           >
-            {saved ? "★ Saved" : "☆ Save"}
-          </button>
-          <button
-            onClick={copy}
-            className="px-4 py-2 rounded-full bg-white/15 backdrop-blur hover:bg-white/25 transition text-sm"
-          >
-            {copied ? "Copied!" : "Copy"}
-          </button>
-          {fact.url && (
-            <a
-              href={fact.url}
-              target="_blank"
-              rel="noreferrer"
-              className="px-4 py-2 rounded-full bg-white/15 backdrop-blur hover:bg-white/25 transition text-sm"
-            >
-              Source ↗
-            </a>
+            {fact.title}
+          </h1>
+
+          {/* detail */}
+          {fact.detail ? (
+            <p className="mt-3 text-white/85 text-[clamp(0.95rem,3.6vw,1.05rem)] leading-[1.5] font-normal max-w-[42rem]">
+              {fact.detail}
+            </p>
+          ) : (
+            <p className="mt-3 text-white/40 text-sm italic">
+              No expanded note for this entry yet.
+            </p>
           )}
         </div>
+      </div>
 
-        <div className="mt-16 text-center text-xs opacity-50">
-          swipe up for next
-        </div>
+      {/* right action rail */}
+      <div className="absolute right-3 sm:right-4 bottom-[max(env(safe-area-inset-bottom),1.5rem)] z-20 flex flex-col items-center gap-5 pb-2">
+        <RailButton onClick={handleSave} label={saved ? "Saved" : ""}>
+          <span className={popping ? "heart-pop block" : "block"}>
+            <HeartIcon
+              filled={saved}
+              className={`w-8 h-8 ${saved ? "text-[var(--accent-2)]" : "text-white"}`}
+            />
+          </span>
+        </RailButton>
+
+        <RailButton onClick={handleShare} label={copied ? "Copied" : ""}>
+          {copied ? (
+            <CheckIcon className="w-8 h-8 text-[var(--accent)]" />
+          ) : (
+            <ShareIcon className="w-8 h-8 text-white" />
+          )}
+        </RailButton>
+
+        {fact.url && (
+          <a
+            href={fact.url}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Source"
+            className="flex flex-col items-center"
+          >
+            <SourceIcon className="w-7 h-7 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" />
+            <span className="text-[0.62rem] mt-1 text-white/75 font-medium tracking-wide">
+              Source
+            </span>
+          </a>
+        )}
       </div>
     </section>
+  );
+}
+
+function RailButton({
+  children,
+  label,
+  onClick,
+}: {
+  children: React.ReactNode;
+  label?: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center"
+    >
+      <span className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">{children}</span>
+      {label && (
+        <span className="text-[0.62rem] mt-1 text-white/85 font-medium tracking-wide">
+          {label}
+        </span>
+      )}
+    </button>
   );
 }

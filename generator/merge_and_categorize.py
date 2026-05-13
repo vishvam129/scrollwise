@@ -273,6 +273,23 @@ DEFAULT_CATEGORY = "Misc"
 # basic cleanup helpers
 URL_RE = re.compile(r"https?://\S+")
 WHITESPACE_RE = re.compile(r"\s+")
+LATIN_LETTER_RE = re.compile(r"[A-Za-z]")
+ANY_LETTER_RE = re.compile(r"[^\W\d_]", flags=re.UNICODE)
+
+
+def is_english(text: str, threshold: float = 0.9) -> bool:
+    """Heuristic: keep facts whose letters are mostly Latin-alphabet.
+
+    Tolerates accents/diacritics on otherwise-Latin words (café, María, μm)
+    while rejecting passages dominated by Cyrillic, CJK, Arabic, etc.
+    """
+    if not text:
+        return False
+    total = len(ANY_LETTER_RE.findall(text))
+    if total < 5:
+        return False
+    latin = len(LATIN_LETTER_RE.findall(text))
+    return (latin / total) >= threshold
 
 
 def categorize(text: str) -> str:
@@ -309,6 +326,8 @@ def process_file(path: Path, seen: set[str], out: list[dict]) -> int:
             detail = ""
             category = categorize(title)
         if not title or len(title) < 25 or len(title) > 500:
+            continue
+        if not is_english(title + " " + detail):
             continue
         key = normalize_key(title)
         if not key or key in seen:
